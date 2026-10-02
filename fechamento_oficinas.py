@@ -1,3 +1,4 @@
+from pathlib import Path
 import io, re, csv, zipfile, unicodedata
 from datetime import datetime
 import pandas as pd
@@ -130,6 +131,23 @@ hr{border-color:#EAECF0}
   <p>Importe os relatórios, revise as NFs, informe os boletos e gere o fechamento.</p>
 </div>
 """,unsafe_allow_html=True)
+st.markdown("### Manual de instruções")
+st.caption("Consulte o POP completo com o passo a passo de extração no Autcom e utilização da aplicação.")
+manual_path = Path(__file__).with_name("POP_Fechamento_de_Oficinas.pdf")
+if manual_path.exists():
+    with open(manual_path, "rb") as manual_file:
+        st.download_button(
+            "📘 Abrir / baixar Manual de Instruções (PDF)",
+            data=manual_file.read(),
+            file_name="POP_Fechamento_de_Oficinas.pdf",
+            mime="application/pdf",
+            use_container_width=True
+        )
+else:
+    st.warning("Manual de instruções não encontrado. Coloque o arquivo POP_Fechamento_de_Oficinas.pdf na mesma pasta do aplicativo.")
+
+st.divider()
+
 a,b=st.columns(2)
 with a:f1=st.file_uploader('1. Fechamento das Oficinas',type=['csv','xlsx','xls'])
 with b:f2=st.file_uploader('2. Tabela 06',type=['csv','xlsx','xls'])
